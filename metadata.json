@@ -1,0 +1,6 @@
+{
+  "name": "Calendario Strappato",
+  "description": "Un piccolo calendario a forma di foglio strappato, incollato con nastro adesivo trasparente, per appuntare le note di oggi con salvataggio automatico nel browser.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

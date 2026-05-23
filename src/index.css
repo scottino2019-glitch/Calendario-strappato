@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Architects+Daughter&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
+  --font-hand: "Caveat", "Architects Daughter", cursive;
+}
+
+/* Custom background patterns and visual effects */
+.bg-wall-plaster {
+  background-color: #f3f3f1;
+  background-image: 
+    radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+    radial-gradient(rgba(0,0,0,0.01) 2px, transparent 2px);
+  background-size: 24px 24px, 48px 48px;
+  background-position: 0 0, 12px 12px;
+}
+
+/* Premium desk/wood effect option (Artistic variant added) */
+.bg-desk-warm {
+  background-color: #3d2b1f;
+  background-image: radial-gradient(#4d3726 1.5px, transparent 1.5px);
+  background-size: 20px 20px;
+}
+
+.border-artistic-frame {
+  border: 24px solid #2a1b12;
+}
+
+/* Notebook lined pattern */
+.paper-lined {
+  background-color: #fff9e6;
+  background-image: 
+    linear-gradient(rgba(185, 28, 28, 0.08) 1.5px, transparent 1.5px);
+  background-size: 100% 32px;
+  line-height: 32px !important;
+}
+
+/* Notebook grid pattern */
+.paper-grid {
+  background-color: #fff9e6;
+  background-image: 
+    linear-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Plain warm parchment style */
+.paper-plain {
+  background-color: #fff9e6;
+}
+
+/* Kraft rustic paper style */
+.paper-kraft {
+  background-color: #e5ccb4;
+  background-image: 
+    radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px),
+    repeating-linear-gradient(45deg, rgba(0,0,0,0.01) 0px, rgba(0,0,0,0.01) 2px, transparent 2px, transparent 4px);
+  background-size: 8px 8px, 16px 16px;
+}
+
+/* The iconic irregular torn clip-path from the design instructions */
+.paper-artistic-clip {
+  clip-path: polygon(
+    2% 1%, 98% 0%, 100% 12%, 99% 25%, 100% 40%, 98% 55%, 100% 70%, 99% 85%, 97% 100%, 
+    80% 98%, 60% 100%, 40% 97%, 20% 100%, 0% 98%, 2% 80%, 1% 60%, 3% 40%, 1% 20%
+  );
+}
+
+/* Visual scotch tape ripped edge clip-path */
+.tape-ripped-x {
+  clip-path: polygon(
+    0% 4%, 4% 0%, 8% 5%, 12% 1%, 16% 4%, 20% 0%, 24% 4%, 28% 2%, 32% 5%, 36% 1%, 40% 4%, 44% 0%, 48% 3%, 52% 1%, 56% 5%, 60% 1%, 64% 4%, 68% 0%, 72% 3%, 76% 1%, 80% 5%, 84% 2%, 88% 4%, 92% 0%, 96% 4%, 100% 1%,
+    100% 96%, 96% 100%, 92% 95%, 88% 99%, 84% 96%, 80% 100%, 76% 95%, 72% 99%, 68% 96%, 64% 100%, 60% 95%, 56% 99%, 52% 95%, 48% 98%, 44% 95%, 40% 100%, 36% 96%, 32% 99%, 28% 95%, 24% 99%, 20% 95%, 16% 98%, 12% 95%, 8% 100%, 4% 96%, 0% 99%
+  );
+}
+
+.tape-ripped-y {
+  clip-path: polygon(
+    2% 0%, 98% 0%,
+    95% 4%, 100% 8%, 96% 12%, 99% 16%, 95% 20%, 98% 24%, 96% 28%, 100% 32%, 95% 36%, 99% 40%, 96% 44%, 98% 48%, 95% 52%, 100% 56%, 96% 60%, 99% 64%, 95% 68%, 98% 72%, 96% 76%, 100% 80%, 95% 84%, 99% 88%, 96% 92%, 98% 96%, 95% 100%,
+    2% 100%,
+    4% 96%, 0% 92%, 3% 88%, 1% 84%, 5% 80%, 2% 76%, 4% 72%, 0% 68%, 3% 64%, 1% 60%, 5% 56%, 2% 52%, 4% 48%, 0% 44%, 3% 40%, 1% 36%, 5% 32%, 2% 28%, 4% 24%, 0% 20%, 3% 16%, 1% 12%, 5% 8%, 2% 4%
+  );
+}
+
+/* Subtle page fold curl shadows */
+.shadow-page-curl {
+  box-shadow: 
+    0 15px 35px rgba(0, 0, 0, 0.1),
+    0 5px 15px rgba(0, 0, 0, 0.05),
+    -5px 25px 30px rgba(0, 0, 0, 0.08),
+    5px 25px 30px rgba(0, 0, 0, 0.08);
+}
+

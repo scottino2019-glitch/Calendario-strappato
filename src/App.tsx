@@ -54,9 +54,8 @@ export default function App() {
     try {
       const params = new URLSearchParams(window.location.search);
       const embedParam = params.get('embed') === 'true';
-      const isIframe = window.self !== window.top;
       
-      setIsEmbed(embedParam || isIframe);
+      setIsEmbed(embedParam);
 
       // Extract custom styling overrides from URL
       const wallParam = params.get('wall');

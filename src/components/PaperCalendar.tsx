@@ -290,6 +290,167 @@ export const PaperCalendar: React.FC<PaperCalendarProps> = ({ state, onChange, i
             </div>
           </div>
 
+          {/* INTERNAL SETTINGS & EMBED CONFIGURATION COLLAPSIBLE SHEETS */}
+          <AnimatePresence>
+            {showSettings && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden border-b border-dashed border-stone-300/60 pb-3 mb-3 z-20"
+              >
+                <div className="p-3 text-xs text-stone-700 bg-stone-500/5 rounded border border-stone-200/30 space-y-3 font-sans select-none relative">
+                  <div>
+                    <span className="block font-bold text-[9px] text-stone-500 uppercase tracking-wider mb-1">Finitura della Carta:</span>
+                    <div className="grid grid-cols-4 gap-1">
+                      {(['lined', 'grid', 'plain', 'kraft'] as PaperStyle[]).map((style) => (
+                        <button
+                          key={style}
+                          onClick={() => onChange((prev) => ({ ...prev, paperStyle: style }))}
+                          className={`py-1 px-1 rounded text-[10px] text-center border capitalize cursor-pointer transition-all duration-150 ${
+                            state.paperStyle === style
+                              ? 'bg-amber-600 text-white border-amber-700 font-semibold'
+                              : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
+                          }`}
+                        >
+                          {style === 'lined' ? 'Righe' : style === 'grid' ? 'Quadri' : style === 'plain' ? 'Bianco' : 'Kraft'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="block font-bold text-[9px] text-stone-500 uppercase tracking-wider mb-1">Nastro Adesivo:</span>
+                    <div className="grid grid-cols-5 gap-0.5">
+                      {(['transparent', 'yellow', 'washi-dots', 'washi-stripes', 'green-deco'] as TapeStyle[]).map((style) => (
+                        <button
+                          key={style}
+                          onClick={() => onChange((prev) => ({ ...prev, tapeStyle: style }))}
+                          className={`py-1 px-0.5 rounded text-[9px] text-center shrink-0 border capitalize truncate cursor-pointer transition-all duration-150 ${
+                            state.tapeStyle === style
+                              ? 'bg-amber-600 text-white border-amber-700 font-semibold'
+                              : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-100'
+                          }`}
+                        >
+                          {style === 'transparent' ? 'Scotch' : style === 'yellow' ? 'Giallo' : style === 'washi-dots' ? 'Pois' : style === 'washi-stripes' ? 'Righe' : 'Deco'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <span className="block font-bold text-[9px] text-stone-500 uppercase tracking-wider mb-1">Stile Calligrafia:</span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {(['handwriting', 'sans'] as FontStyle[]).map((font) => (
+                        <button
+                          key={font}
+                          onClick={() => onChange((prev) => ({ ...prev, fontStyle: font }))}
+                          className={`py-1 px-2 border rounded cursor-pointer transition-all duration-150 text-center ${
+                            state.fontStyle === font
+                              ? 'bg-amber-600 text-white border-amber-700 font-semibold shadow-xs'
+                              : 'bg-white border-stone-200 hover:bg-stone-50 text-stone-700'
+                          }`}
+                        >
+                          {font === 'handwriting' ? '✎ Grafia' : '⌨ Calligrafo'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {showEmbedHelper && !isEmbed && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="overflow-hidden border-b border-dashed border-stone-300/60 pb-3 mb-3 z-20"
+              >
+                <div className="p-3 text-xs text-stone-700 bg-stone-500/5 rounded border border-stone-200/30 space-y-2.5 font-sans relative">
+                  <div className="font-semibold text-stone-800 flex items-center gap-1.5 select-none">
+                    <Code className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
+                    <span>Incolla il foglio nel tuo sito</span>
+                  </div>
+
+                  <p className="text-[10px] text-stone-500 leading-normal select-none">
+                    Incolla questo iframe HTML sul tuo sito (WordPress, Portfolio, Notion o codice personalizzato) per averlo integrato nella tua scrivania virtuale!
+                  </p>
+
+                  <div className="space-y-2.5">
+                    <div className="flex gap-4 items-center select-none">
+                      <div className="flex-1">
+                        <label className="text-[9px] text-stone-500 font-mono block mb-0.5">Larghezza: {embedWidth}px</label>
+                        <input
+                          type="range"
+                          min="320"
+                          max="600"
+                          step="10"
+                          value={embedWidth}
+                          onChange={(e) => setEmbedWidth(Number(e.target.value))}
+                          className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="text-[9px] text-stone-500 font-mono block mb-0.5">Altezza: {embedHeight}px</label>
+                        <input
+                          type="range"
+                          min="400"
+                          max="800"
+                          step="10"
+                          value={embedHeight}
+                          onChange={(e) => setEmbedHeight(Number(e.target.value))}
+                          className="w-full h-1 bg-stone-200 rounded-lg appearance-none cursor-pointer accent-amber-600"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="relative">
+                      <div className="bg-stone-900 text-stone-300 p-2.5 rounded font-mono text-[9px] break-all border border-stone-800 select-all max-h-20 overflow-y-auto leading-relaxed">
+                        {`<iframe src="${window.location.origin}${window.location.pathname}?embed=true&paper=${state.paperStyle}&font=${state.fontStyle}&tape=${state.tapeStyle}" width="${embedWidth}" height="${embedHeight}" style="border:none; overflow:hidden; background:transparent;" allowtransparency="true"></iframe>`}
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const iframeText = `<iframe src="${window.location.origin}${window.location.pathname}?embed=true&paper=${state.paperStyle}&font=${state.fontStyle}&tape=${state.tapeStyle}" width="${embedWidth}" height="${embedHeight}" style="border:none; overflow:hidden; background:transparent;" allowtransparency="true"></iframe>`;
+                          navigator.clipboard.writeText(iframeText);
+                          setCopiedCode(true);
+                          setTimeout(() => setCopiedCode(false), 2000);
+                        }}
+                        className="mt-2 w-full flex items-center justify-center gap-1 py-1.5 px-3 bg-amber-600 hover:bg-amber-700 font-bold text-white rounded text-[10px] cursor-pointer transition-colors active:translate-y-[1.5px]"
+                      >
+                        {copiedCode ? (
+                          <>
+                            <Check className="w-3.5 h-3.5" />
+                            <span>Copiato negli Appunti!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copia Codice HTML</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+
+                    <div className="bg-amber-500/10 border border-amber-500/20 rounded p-2 text-[9px] text-amber-800 leading-snug">
+                      <span className="font-bold block">💡 Per darti quel tocco disordinato e magico:</span>
+                      Nel CSS del tuo sito, applica una leggera rotazione all'iframe:
+                      <code className="block mt-0.5 bg-white/70 p-1 rounded font-mono text-[8px] text-stone-800">
+                        {`transform: rotate(${(Math.random() >= 0.5 ? 1.2 : -1.2).toFixed(1)}deg);`}
+                      </code>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* WRITING AREA */}
           <div className="relative flex-1 flex flex-col">
             
@@ -431,210 +592,6 @@ export const PaperCalendar: React.FC<PaperCalendarProps> = ({ state, onChange, i
             </div>
           </div>
         </motion.div>
-
-      {/* COORDY EMBED GENERATOR CODE BLOCK (STYLIZED AS A HAND-TAPED METALLIC RULER NOTE ON THE BOTTOM WALL) */}
-      <AnimatePresence>
-        {showEmbedHelper && !isEmbed && (
-          <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.95 }}
-            className="mt-6 p-4 relative bg-stone-100 rounded border border-stone-200 bg-linear-to-b from-stone-50 to-stone-100 shadow-md text-xs text-stone-700"
-          >
-            {/* Visual Mini Adhesive Tape onto settings note */}
-            <div className="absolute -top-3 left-[40%] w-16 h-5 opacity-70 bg-white/30 border border-white/5 shadow-sm backdrop-blur-[1px] tape-ripped-x rotate-[-1deg] bg-amber-200/45" />
-
-            <div className="font-semibold text-stone-800 flex items-center gap-1.5 mb-2 select-none">
-              <Code className="w-4 h-4 text-amber-600" />
-              <span>Copia Codice per il tuo Portfolio / Sito</span>
-            </div>
-
-            <p className="text-[10px] text-stone-500 mb-3 select-none">
-              Incolla questo blocco di codice sul file HTML del tuo sito (o sul tuo site builder come WordPress, Notion, Webflow) per mostrare questo foglio nel tuo scaffale o scrivania virtuale!
-            </p>
-
-            <div className="space-y-3">
-              {/* Size selectors */}
-              <div>
-                <span className="block text-stone-500 mb-1 select-none font-medium">Dimensioni Widget:</span>
-                <div className="flex gap-4 items-center">
-                  <div className="flex-1">
-                    <label className="text-[10px] text-stone-500 font-mono">Larghezza: {embedWidth}px</label>
-                    <input
-                      type="range"
-                      min="320"
-                      max="600"
-                      step="10"
-                      value={embedWidth}
-                      onChange={(e) => setEmbedWidth(Number(e.target.value))}
-                      className="w-full accent-amber-500"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-[10px] text-stone-500 font-mono">Altezza: {embedHeight}px</label>
-                    <input
-                      type="range"
-                      min="400"
-                      max="800"
-                      step="10"
-                      value={embedHeight}
-                      onChange={(e) => setEmbedHeight(Number(e.target.value))}
-                      className="w-full accent-amber-500"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Live Preview Embed Code snippet */}
-              <div className="relative">
-                <span className="block text-stone-500 mb-1 select-none font-medium">Codice HTML da Copiare:</span>
-                <div className="bg-stone-900 text-stone-300 p-2.5 rounded font-mono text-[9px] break-all border border-stone-800 select-all max-h-24 overflow-y-auto leading-normal">
-                  {`<iframe src="${window.location.origin}${window.location.pathname}?embed=true&paper=${state.paperStyle}&font=${state.fontStyle}&tape=${state.tapeStyle}" width="${embedWidth}" height="${embedHeight}" style="border:none; overflow:hidden; background:transparent;" allowtransparency="true"></iframe>`}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    const iframeText = `<iframe src="${window.location.origin}${window.location.pathname}?embed=true&paper=${state.paperStyle}&font=${state.fontStyle}&tape=${state.tapeStyle}" width="${embedWidth}" height="${embedHeight}" style="border:none; overflow:hidden; background:transparent;" allowtransparency="true"></iframe>`;
-                    navigator.clipboard.writeText(iframeText);
-                    setCopiedCode(true);
-                    setTimeout(() => setCopiedCode(false), 2000);
-                  }}
-                  className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 px-3 bg-amber-500 hover:bg-amber-600 font-bold text-white rounded cursor-pointer leading-tight shadow-xs transition-all active:translate-y-[1px]"
-                >
-                  {copiedCode ? (
-                    <>
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Copiato negli Appunti!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copia Codice HTML</span>
-                    </>
-                  )}
-                </button>
-              </div>
-
-              {/* Styling recommendations for the chaotic desk layout */}
-              <div className="bg-amber-50 border border-amber-200/40 rounded p-2 text-[10px] text-amber-800 font-medium">
-                <span className="font-bold underline block mb-0.5">💡 Suggerimento per Scrivania Caotica:</span>
-                Nel CSS del tuo sito, applica uno stile di rotazione all'iframe per dargli quel tocco realistico e disordinato:
-                <code className="block mt-1 bg-white/60 p-1 rounded font-mono text-[9px] text-slate-800">
-                  {`transform: rotate(${(Math.random() >= 0.5 ? 1.5 : -1.5).toFixed(1)}deg);`}
-                </code>
-              </div>
-            </div>
-
-            <div className="mt-3 flex gap-2">
-              <a
-                href={`${window.location.origin}${window.location.pathname}?embed=true&paper=${state.paperStyle}&font=${state.fontStyle}&tape=${state.tapeStyle}`}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 flex items-center justify-center gap-1 py-1 px-2 border border-stone-300 bg-white text-stone-700 hover:bg-stone-50 rounded font-semibold text-center"
-              >
-                <ExternalLink className="w-3 h-3" />
-                <span>Anteprima</span>
-              </a>
-              <button
-                onClick={() => setShowEmbedHelper(false)}
-                className="flex-1 bg-stone-200 hover:bg-stone-300 py-1 rounded text-stone-700 font-semibold cursor-pointer"
-              >
-                Chiudi
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* QUICK FLOATING CONFIGURATION DRAWER (STYLIZED AS A HAND-TAPED NOTE ON THE BOTTOM WALL) */}
-      <AnimatePresence>
-        {showSettings && (
-          <motion.div
-            initial={{ opacity: 0, y: 15, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 15, scale: 0.95 }}
-            className="mt-6 p-4 relative bg-stone-100 rounded border border-stone-200 bg-linear-to-b from-stone-50 to-stone-100 shadow-md text-xs text-stone-700"
-          >
-            {/* Visual Mini Adhesive Tape onto settings note */}
-            <div className="absolute -top-3 left-[40%] w-16 h-5 opacity-70 bg-white/30 border border-white/5 shadow-sm backdrop-blur-[1px] tape-ripped-x rotate-[-1deg]" />
-
-            <div className="font-semibold text-stone-800 flex items-center gap-1.5 mb-3 select-none">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>Personalizza Calendario</span>
-            </div>
-
-            <div className="space-y-3">
-              {/* Paper Selection */}
-              <div>
-                <span className="block text-stone-500 mb-1 pointer-events-none select-none">Finitura della Carta:</span>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {(['lined', 'grid', 'plain', 'kraft'] as PaperStyle[]).map((style) => (
-                    <button
-                      key={style}
-                      onClick={() => onChange((prev) => ({ ...prev, paperStyle: style }))}
-                      className={`py-1 px-1.5 rounded text-center border capitalize cursor-pointer font-medium ${
-                        state.paperStyle === style
-                          ? 'bg-amber-500 text-white border-amber-600 font-semibold'
-                          : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
-                      }`}
-                    >
-                      {style === 'lined' ? 'Righe' : style === 'grid' ? 'Quadri' : style === 'plain' ? 'Bianco' : 'Kraft'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Tape Selection */}
-              <div>
-                <span className="block text-stone-500 mb-1 pointer-events-none select-none font-sans">Stile Nasso Adesivo:</span>
-                <div className="grid grid-cols-5 gap-1 shadow-xs">
-                  {(['transparent', 'yellow', 'washi-dots', 'washi-stripes', 'green-deco'] as TapeStyle[]).map((style) => (
-                    <button
-                      key={style}
-                      onClick={() => onChange((prev) => ({ ...prev, tapeStyle: style }))}
-                      className={`py-1 px-1 rounded text-[10px] text-center shrink-0 border capitalize cursor-pointer font-medium ${
-                        state.tapeStyle === style
-                          ? 'bg-amber-500 text-white border-amber-600 font-semibold shadow-xs'
-                          : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-50'
-                      }`}
-                    >
-                      {style === 'transparent' ? 'Scotch' : style === 'yellow' ? 'Giallo' : style === 'washi-dots' ? 'Pois' : style === 'washi-stripes' ? 'Righe' : 'Deco'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Character custom font style */}
-              <div>
-                <span className="block text-stone-500 mb-1 pointer-events-none select-none">Stile Scrittura:</span>
-                <div className="grid grid-cols-2 gap-2">
-                  {(['handwriting', 'sans'] as FontStyle[]).map((font) => (
-                    <button
-                      key={font}
-                      onClick={() => onChange((prev) => ({ ...prev, fontStyle: font }))}
-                      className={`py-1 px-2 border rounded cursor-pointer font-medium text-center ${
-                        state.fontStyle === font
-                          ? 'bg-amber-500 text-white border-amber-600 font-semibold'
-                          : 'bg-white border-stone-200 hover:bg-stone-50 text-stone-700'
-                      }`}
-                    >
-                      {font === 'handwriting' ? '✎ Grafia' : '⌨ Tastiera'}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowSettings(false)}
-              className="mt-3.5 w-full bg-stone-200 hover:bg-stone-300 transition-colors py-1 rounded text-stone-700 font-semibold cursor-pointer"
-            >
-              Chiudi
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
